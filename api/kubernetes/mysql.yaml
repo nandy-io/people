@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mysql
+  namespace: people-nandy-io
+spec:
+  backoffLimit: 12
+  template:
+    spec:
+      containers:
+      - name: mysql
+        image: docker.io/nandyio/people-api:0.1
+        imagePullPolicy: Always
+        command: ["/opt/service/bin/db.py"]
+        env:
+        - name: MYSQL_HOST
+          value: db.mysql
+        - name: MYSQL_PORT
+          value: "3306"
+      restartPolicy: Never

@@ -1,0 +1,26 @@
+apiVersion: klot.io/v1
+kind: KlotIOApp
+metadata:
+  name: people.nandy.io
+spec:
+  namespace: people-nandy-io
+  group: Nandy I/O
+  member: People
+  description: Central People store for other Nandy Apps
+  manifests:
+  - path: api/kubernetes/mysql.yaml
+  - path: api/kubernetes/api.yaml
+  - path: gui/kubernetes/gui.yaml
+  requires:
+  - name: mysql.klot.io
+    source:
+      site: github.com
+      repo: klot-io/mysql
+  recommends:
+  - name: chore.nandy.io
+    source:
+      site: github.com
+      repo: nandy-io/chore
+  url:
+    protocol: http
+    host: www-people-nandy-io
