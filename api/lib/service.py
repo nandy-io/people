@@ -16,6 +16,7 @@ def app():
     api.add_resource(Group, '/group')
     api.add_resource(PersonCL, '/person')
     api.add_resource(PersonRUD, '/person/<int:id>')
+    api.add_resource(Integrate, '/integrate')
 
     return app
 
@@ -42,3 +43,26 @@ class PersonCL(Person, klotio.service.RestCL):
 
 class PersonRUD(Person, klotio.service.RestRUD):
     pass
+
+class Integrate(flask_restful.Resource):
+
+    @klotio.service.require_session
+    def options(self):
+
+        choices = Person.choices()
+
+        return {"options": choices[0], "labels": choices[1]}
+
+    @klotio.service.require_session
+    def get(self):
+
+        if "name" not in flask.request.args:
+            return {"message": "missing name"}, 400
+
+        person = flask.request.session.query(
+            mysql.Person
+        ).filter_by(
+            name=flask.request.args['name']
+        ).one()
+
+        return {"person": self.response(person)}

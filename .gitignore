@@ -2,3 +2,4 @@
 .AppleDouble
 *.pyc
 api/config/
+lib/nandyio_people.egg-info/
