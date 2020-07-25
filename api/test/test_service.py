@@ -99,3 +99,29 @@ class TestPerson(TestRest):
         self.assertStatusModel(self.api.get(f"/person/{person.id}"), 200, "person", {
             "name": "unit"
         })
+
+
+class TestIntegrate(TestRest):
+
+    def test_options(self):
+
+        person = self.sample.person("unit")
+
+        response = self.api.options("/integrate")
+
+        self.assertEqual(response.json, {
+            "options": [person.id],
+            "labels": {str(person.id): 'unit'}
+        })
+        self.assertEqual(response.status_code, 200)
+
+    def test_get(self):
+
+        person = self.sample.person("unit")
+
+        self.assertStatusValue(self.api.get(f"/integrate"), 400, "message", "missing name")
+
+        self.assertStatusModel(self.api.get(f"/integrate?name=unit"), 200, "person", {
+            "id": person.id,
+            "name": "unit"
+        })

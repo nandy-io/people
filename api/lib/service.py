@@ -44,7 +44,7 @@ class PersonCL(Person, klotio.service.RestCL):
 class PersonRUD(Person, klotio.service.RestRUD):
     pass
 
-class Integrate(flask_restful.Resource):
+class Integrate(PersonRUD):
 
     @klotio.service.require_session
     def options(self):
