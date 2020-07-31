@@ -29,8 +29,8 @@
             "host": "localhost",
             "pathMappings": [
                 {
-                    "localRoot": "${workspaceFolder}/api",
-                    "remoteRoot": "/opt/service"
+                    "localRoot": "${workspaceFolder}/module",
+                    "remoteRoot": "/opt/nandy-io/"
                 }
             ]
         }
