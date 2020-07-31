@@ -2,10 +2,10 @@ import sqlalchemy
 import sqlalchemy.ext.mutable
 import sqlalchemy_jsonfield
 
-import klotio.mysql
+import klotio.model
 
 
-class MySQL(klotio.mysql.MySQL):
+class MySQL(klotio.model.MySQL):
 
     DATABASE = "nandy_people"
 

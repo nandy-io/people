@@ -1,32 +1,22 @@
-IMAGE=nandyio-people
 VERSION?=0.1
-ACCOUNT=klotio
-NAMESPACE=people-nandy-io
-VOLUMES=-v ${PWD}/lib:/opt/nandy-io/lib \
-		-v ${PWD}/test:/opt/nandy-io/test \
+TILT_PORT=26580
+IMAGE=arm32v7/python:3.8.5-alpine3.12
+VOLUMES=-v ${PWD}/module/:/opt/nandy-io/module \
 		-v ${PWD}/setup.py:/opt/nandy-io/setup.py
-.PHONY: build shell test install remove reset tag untag
+.PHONY: up down setup tag untag
 
-build:
-	docker build . -t $(ACCOUNT)/$(IMAGE):$(VERSION)
+up:
+	mkdir -p config
+	echo "- op: add\n  path: /spec/template/spec/volumes/0/hostPath/path\n  value: $(PWD)/config" > tilt/config.yaml
+	kubectx docker-desktop
+	tilt --port $(TILT_PORT) up
 
-shell:
-	docker run -it $(VOLUMES) $(ENVIRONMENT) $(ACCOUNT)/$(IMAGE):$(VERSION) sh
-
-test:
-	docker run -it $(VOLUMES) $(ENVIRONMENT) $(ACCOUNT)/$(IMAGE):$(VERSION) sh -c "coverage run -m unittest discover -v test && coverage report -m --include '*.py'"
+down:
+	kubectx docker-desktop
+	tilt down
 
 setup:
-	docker run -it $(VOLUMES) $(ENVIRONMENT) $(ACCOUNT)/$(IMAGE):$(VERSION) sh -c "python setup.py install"
-
-
-install:
-	-kubectl create ns $(NAMESPACE)
-
-remove:
-	-kubectl delete ns $(NAMESPACE)
-
-reset: remove instal
+	docker run -it $(VOLUMES) $(IMAGE) sh -c "cd /opt/nandy-io/ && python setup.py install"
 
 tag:
 	-git tag -a "v$(VERSION)" -m "Version $(VERSION)"

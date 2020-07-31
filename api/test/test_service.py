@@ -51,9 +51,6 @@ class TestHealth(TestRest):
 
 class TestGroup(TestRest):
 
-    @unittest.mock.patch.dict(os.environ, {
-        "NODE_NAME": "barry"
-    })
     @unittest.mock.patch("requests.get")
     def test_get(self, mock_get):
 
@@ -68,7 +65,7 @@ class TestGroup(TestRest):
         }]})
 
         mock_get.assert_has_calls([
-            unittest.mock.call("http://barry:8083/app/people.nandy.io/member"),
+            unittest.mock.call("http://api.klot-io/app/people.nandy.io/member"),
             unittest.mock.call().raise_for_status(),
             unittest.mock.call().json()
         ])

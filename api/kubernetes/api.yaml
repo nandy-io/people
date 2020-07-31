@@ -24,19 +24,16 @@ spec:
           value: db.mysql
         - name: MYSQL_PORT
           value: "3306"
-        - name: NODE_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: spec.nodeName
         ports:
         - containerPort: 80
         readinessProbe:
           initialDelaySeconds: 5
+          periodSeconds: 5
           httpGet:
             path: /health
             port: 80
         livenessProbe:
-          initialDelaySeconds: 2
+          initialDelaySeconds: 5
           periodSeconds: 5
           httpGet:
             path: /health
