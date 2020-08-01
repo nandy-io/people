@@ -1,14 +1,14 @@
 import flask
 import flask_restful
 
-import mysql
+import model
 import klotio.api
 
 def app():
 
     app = flask.Flask("nandy-io-speech-api")
 
-    app.mysql = mysql.MySQL()
+    app.mysql = model.MySQL()
 
     api = flask_restful.Api(app)
 
@@ -29,8 +29,8 @@ class Person(klotio.api.Model):
 
     SINGULAR = "person"
     PLURAL = "persons"
-    MODEL = mysql.Person
-    ORDER = [mysql.Person.name]
+    MODEL = model.Person
+    ORDER = [model.Person.name]
 
     FIELDS = [
         {
@@ -60,7 +60,7 @@ class Integrate(PersonRUD):
             return {"message": "missing name"}, 400
 
         person = flask.request.session.query(
-            mysql.Person
+            model.Person
         ).filter_by(
             name=flask.request.args['name']
         ).one()
