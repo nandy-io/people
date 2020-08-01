@@ -1,8 +1,8 @@
 import copy
 import requests
-import klotio.api
+import klotio.service
 
-class Person(klotio.api.Model):
+class Person(klotio.service.Model):
 
     FIELD = {
         "name": "person_id",
