@@ -10,8 +10,8 @@ import flask
 import opengui
 import sqlalchemy.exc
 
-import model
-import test_model
+import models
+import test_models
 
 import service
 
@@ -32,7 +32,7 @@ class TestRest(klotio.unittest.TestCase):
         self.app.mysql.create_database()
 
         self.session = self.app.mysql.session()
-        self.sample = test_model.Sample(self.session)
+        self.sample = test_models.Sample(self.session)
 
         self.app.mysql.Base.metadata.create_all(self.app.mysql.engine)
 

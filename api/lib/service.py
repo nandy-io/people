@@ -1,18 +1,18 @@
 import flask
 import flask_restful
 
-import model
-import klotio.api
+import models
+import klotio.service
 
 def app():
 
     app = flask.Flask("nandy-io-speech-api")
 
-    app.mysql = model.MySQL()
+    app.mysql = models.MySQL()
 
     api = flask_restful.Api(app)
 
-    api.add_resource(klotio.api.Health, '/health')
+    api.add_resource(klotio.service.Health, '/health')
     api.add_resource(Group, '/group')
     api.add_resource(PersonCL, '/person')
     api.add_resource(PersonRUD, '/person/<int:id>')
@@ -21,16 +21,16 @@ def app():
     return app
 
 
-class Group(klotio.api.Group):
+class Group(klotio.service.Group):
     APP = "people.nandy.io"
 
 
-class Person(klotio.api.Model):
+class Person(klotio.service.Model):
 
     SINGULAR = "person"
     PLURAL = "persons"
-    MODEL = model.Person
-    ORDER = [model.Person.name]
+    MODEL = models.Person
+    ORDER = [models.Person.name]
 
     FIELDS = [
         {
@@ -38,29 +38,29 @@ class Person(klotio.api.Model):
         }
     ]
 
-class PersonCL(Person, klotio.api.RestCL):
+class PersonCL(Person, klotio.service.RestCL):
     pass
 
-class PersonRUD(Person, klotio.api.RestRUD):
+class PersonRUD(Person, klotio.service.RestRUD):
     pass
 
 class Integrate(PersonRUD):
 
-    @klotio.api.require_session
+    @klotio.service.require_session
     def options(self):
 
         choices = Person.choices()
 
         return {"options": choices[0], "labels": choices[1]}
 
-    @klotio.api.require_session
+    @klotio.service.require_session
     def get(self):
 
         if "name" not in flask.request.args:
             return {"message": "missing name"}, 400
 
         person = flask.request.session.query(
-            model.Person
+            models.Person
         ).filter_by(
             name=flask.request.args['name']
         ).one()
