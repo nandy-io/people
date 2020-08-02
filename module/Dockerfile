@@ -1,6 +1,6 @@
 FROM arm32v7/python:3.8.5-alpine3.12
 
-RUN apk add git &mkdir -p /opt/nandy-io
+RUN mkdir -p /opt/nandy-io
 
 WORKDIR /opt/nandy-io
 
