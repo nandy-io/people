@@ -1,8 +1,15 @@
-FROM klotio/sqlalchemy:0.1
+FROM arm32v7/python:3.8.5-alpine3.12
+
+RUN mkdir -p /opt/nandy-io
+
+WORKDIR /opt/nandy-io
 
 COPY requirements.txt .
 
 RUN apk add --no-cache --virtual .pip-deps  \
+        gcc \
+        libc-dev \
+        make \
         git \
     && pip install --no-cache-dir -r requirements.txt \
     && apk del --no-network .pip-deps \
@@ -13,9 +20,4 @@ RUN apk add --no-cache --virtual .pip-deps  \
 			\( -type f -a \( -name '*.pyc' -o -name '*.pyo' \) \) \
 		\) -exec rm -rf '{}' +
 
-COPY bin bin
-COPY lib lib
-
-ENV PYTHONPATH "/opt/service/lib:${PYTHONPATH}"
-
-CMD "/opt/service/bin/api.py"
+ENV PYTHONPATH "/opt/nandy-io/lib:${PYTHONPATH}"

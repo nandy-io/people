@@ -23,6 +23,7 @@ spec:
         - containerPort: 80
         readinessProbe:
           initialDelaySeconds: 5
+          periodSeconds: 5
           httpGet:
             path: /api/health
             port: 80

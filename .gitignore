@@ -1,5 +1,6 @@
 .DS_Store
 .AppleDouble
 *.pyc
-api/config/
-lib/nandyio_people.egg-info/
+config/
+tilt/config.yaml
+module/lib/nandyio_people.egg-info/
