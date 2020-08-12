@@ -1,14 +1,17 @@
 import unittest
 import unittest.mock
+import klotio_unittest
 
-import nandyio.unittest.people
+import nandyio_people
+import nandyio_people_unittest
 
 
-class TestMockPerson(unittest.TestCase):
+class TestMockPerson(klotio_unittest.TestCase):
 
+    @unittest.mock.patch("nandyio_people.Person", nandyio_people_unittest.MockPerson)
     def test_fields(self):
 
-        self.assertEqual(nandyio.unittest.people.MockPerson.fields(), [{
+        self.assertEqual(nandyio_people.Person.fields(), [{
             "name": "person_id",
             "label": "person",
             "style": "radios",
@@ -25,24 +28,25 @@ class TestMockPerson(unittest.TestCase):
             }
         }])
 
+    @unittest.mock.patch("nandyio_people.Person", nandyio_people_unittest.MockPerson)
     def test_model(self):
 
-        self.assertEqual(nandyio.unittest.people.MockPerson.model(id=1), {
+        self.assertEqual(nandyio_people.Person.model(id=1), {
             "id": 1,
             "name": "unit"
         })
 
-        self.assertEqual(nandyio.unittest.people.MockPerson.model(name="unit"), {
+        self.assertEqual(nandyio_people.Person.model(name="unit"), {
             "id": 1,
             "name": "unit"
         })
 
-        self.assertEqual(nandyio.unittest.people.MockPerson.model(id=2), {
+        self.assertEqual(nandyio_people.Person.model(id=2), {
             "id": 2,
             "name": "test"
         })
 
-        self.assertEqual(nandyio.unittest.people.MockPerson.model(name="test"), {
+        self.assertEqual(nandyio_people.Person.model(name="test"), {
             "id": 2,
             "name": "test"
         })

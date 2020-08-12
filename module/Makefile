@@ -1,8 +1,8 @@
 IMAGE=module
 ACCOUNT=nandyio
 DEBUG_PORT=5678
-VOLUMES=-v ${PWD}/lib:/opt/nandy-io/lib \
-		-v ${PWD}/test:/opt/nandy-io/test
+VOLUMES=-v ${PWD}/lib:/opt/service/lib \
+		-v ${PWD}/test:/opt/service/test
 ENVIRONMENT=-e PYTHONDONTWRITEBYTECODE=1 \
 			-e PYTHONUNBUFFERED=1
 
