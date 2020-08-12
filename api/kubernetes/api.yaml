@@ -24,6 +24,8 @@ spec:
           value: db.mysql
         - name: MYSQL_PORT
           value: "3306"
+        - name: LOG_LEVEL
+          value: WARNING
         ports:
         - containerPort: 80
         readinessProbe:

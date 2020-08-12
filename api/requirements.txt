@@ -1,2 +1,0 @@
-git+https://github.com/gaf3/opengui.git@v0.5#egg=opengui
-git+https://github.com/klot-io/app.git@v0.3#egg=klotio-app
