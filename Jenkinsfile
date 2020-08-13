@@ -16,30 +16,10 @@ pipeline {
                 }
             }
         }
-        stage('Push api') {
-            when {
-                branch 'master'
-            }
-            steps {
-                dir('api') {
-                    sh 'make push'
-                }
-            }
-        }
         stage('Build gui') {
             steps {
                 dir('gui') {
                     sh 'make build'
-                }
-            }
-        }
-        stage('Push gui') {
-            when {
-                branch 'master'
-            }
-            steps {
-                dir('gui') {
-                    sh 'make push'
                 }
             }
         }
@@ -60,6 +40,26 @@ pipeline {
         stage('Setup module') {
             steps {
                 sh 'make setup'
+            }
+        }
+        stage('Push api') {
+            when {
+                branch 'master'
+            }
+            steps {
+                dir('api') {
+                    sh 'make push'
+                }
+            }
+        }
+        stage('Push gui') {
+            when {
+                branch 'master'
+            }
+            steps {
+                dir('gui') {
+                    sh 'make push'
+                }
             }
         }
     }
