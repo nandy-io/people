@@ -22,9 +22,11 @@ def app():
 
     app.logger = klotio.logger(app.name)
 
-    app.logger.debug("settings", extra={
-        "settings": {
-            "mysql": str(app.mysql.engine.url)
+    app.logger.debug("init", extra={
+        "init": {
+            "mysql": {
+                "connection": str(app.mysql.engine.url)
+            }
         }
     })
 

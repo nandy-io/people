@@ -54,9 +54,11 @@ class TestAPI(TestRestful):
 
         self.assertEqual(app.logger.name, "nandy-io-people-api")
 
-        self.assertLogged(app.logger, "debug", "settings", extra={
-            "settings": {
-                "mysql": "mysql+pymysql://root@nandyio-people-api-mysql:3306/nandy_people"
+        self.assertLogged(app.logger, "debug", "init", extra={
+            "init": {
+                "mysql": {
+                    "connection": "mysql+pymysql://root@nandyio-people-api-mysql:3306/nandy_people"
+                }
             }
         })
 

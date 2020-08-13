@@ -1,8 +1,7 @@
 VERSION?=0.1
 TILT_PORT=26580
 IMAGE=arm32v7/python:3.8.5-alpine3.12
-VOLUMES=-v ${PWD}/module/:/opt/nandy-io/module \
-		-v ${PWD}/setup.py:/opt/nandy-io/setup.py
+VOLUMES=-v ${PWD}/setup.py:/opt/nandy-io/setup.py
 .PHONY: up down setup tag untag
 
 up:
