@@ -1,5 +1,6 @@
 VERSION?=0.1
 TILT_PORT=26580
+TTY=$(shell if tty -s; then echo "-it"; fi)
 IMAGE=arm32v7/python:3.8.5-alpine3.12
 VOLUMES=-v ${PWD}/setup.py:/opt/nandy-io/setup.py
 .PHONY: up down setup tag untag
@@ -15,7 +16,7 @@ down:
 	tilt down
 
 setup:
-	docker run -it $(VOLUMES) $(IMAGE) sh -c "cd /opt/nandy-io/ && python setup.py install"
+	docker run $(TTY) $(VOLUMES) $(IMAGE) sh -c "cd /opt/nandy-io/ && python setup.py install"
 
 tag:
 	-git tag -a "v$(VERSION)" -m "Version $(VERSION)"
