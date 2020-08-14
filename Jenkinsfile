@@ -23,23 +23,23 @@ pipeline {
                 }
             }
         }
-        stage('Build module') {
+        stage('Build package') {
             steps {
-                dir('module') {
+                dir('package') {
                     sh 'make build'
                 }
             }
         }
-        stage('Test module') {
+        stage('Test package') {
             steps {
-                dir('module') {
+                dir('package') {
                     sh 'make test'
                 }
             }
         }
-        stage('Setup module') {
+        stage('Install package') {
             steps {
-                sh 'make setup'
+                sh 'make install'
             }
         }
         stage('Push api') {

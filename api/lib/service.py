@@ -1,16 +1,17 @@
 import flask
 import flask_restful
 
-import models
 import klotio
 import klotio_flask_restful
 import klotio_sqlalchemy_restful
+
+import nandyio_people_models
 
 def app():
 
     app = flask.Flask("nandy-io-people-api")
 
-    app.mysql = models.MySQL()
+    app.mysql = nandyio_people_models.MySQL()
 
     api = flask_restful.Api(app)
 
@@ -41,8 +42,8 @@ class Person(klotio_sqlalchemy_restful.Model):
 
     SINGULAR = "person"
     PLURAL = "persons"
-    MODEL = models.Person
-    ORDER = [models.Person.name]
+    MODEL = nandyio_people_models.Person
+    ORDER = [nandyio_people_models.Person.name]
 
     FIELDS = [
         {
@@ -74,7 +75,7 @@ class Integrate(PersonRUD):
             return {"message": "missing name"}, 400
 
         person = flask.request.session.query(
-            models.Person
+            nandyio_people_models.Person
         ).filter_by(
             name=flask.request.args['name']
         ).one()

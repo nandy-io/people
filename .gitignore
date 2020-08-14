@@ -3,4 +3,4 @@
 *.pyc
 config/
 tilt/config.yaml
-module/lib/nandyio_people.egg-info/
+package/lib/nandyio_people.egg-info/

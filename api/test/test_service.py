@@ -1,7 +1,7 @@
 import unittest
 import unittest.mock
 import klotio_unittest
-import test_models
+import test_nandyio_people_models
 
 import os
 import json
@@ -11,7 +11,6 @@ import flask
 import opengui
 import sqlalchemy.exc
 
-import models
 import service
 
 
@@ -32,7 +31,7 @@ class TestRestful(klotio_unittest.TestCase):
         self.app.mysql.create_database()
 
         self.session = self.app.mysql.session()
-        self.sample = test_models.Sample(self.session)
+        self.sample = test_nandyio_people_models.Sample(self.session)
 
         self.app.mysql.Base.metadata.create_all(self.app.mysql.engine)
 

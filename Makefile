@@ -2,11 +2,11 @@ VERSION?=0.1
 INSTALL=klotio/sqlalchemy:0.2
 TILT_PORT=26580
 TTY=$(shell if tty -s; then echo "-it"; fi)
-VOLUMES=-v ${PWD}/module/:/opt/service/module \
+VOLUMES=-v ${PWD}/package/:/opt/service/package \
 		-v ${PWD}/setup.py:/opt/service/setup.py
 ENVIRONMENT=-e PYTHONDONTWRITEBYTECODE=1 \
 			-e PYTHONUNBUFFERED=1
-.PHONY: up down setup tag untag
+.PHONY: up down install tag untag
 
 up:
 	mkdir -p config
@@ -18,7 +18,7 @@ down:
 	kubectx docker-desktop
 	tilt down
 
-setup:
+install:
 	docker run $(TTY) $(VOLUMES) $(ENVIRONMENT) $(INSTALL) sh -c "cp -r /opt/service /opt/install && cd /opt/install/ && python setup.py install && python -m nandyio_people && python -m nandyio_people_unittest"
 
 tag:
