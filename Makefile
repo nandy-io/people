@@ -19,7 +19,7 @@ down:
 	tilt down
 
 verify:
-	docker run $(TTY) $(VOLUMES) $(ENVIRONMENT) $(INSTALL) sh -c "cp -r /opt/service /opt/install && cd /opt/install/ && python setup.py install && python -m nandyio_people && python -m nandyio_people_unittest"
+	docker run $(TTY) $(VOLUMES) $(ENVIRONMENT) $(INSTALL) sh -c "cp -r /opt/service /opt/install && cd /opt/install/ && python setup.py install && python -m nandyio_people_integrations && python -m nandyio_people_unittest"
 
 tag:
 	-git tag -a "v$(VERSION)" -m "Version $(VERSION)"
