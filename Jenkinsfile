@@ -37,9 +37,9 @@ pipeline {
                 }
             }
         }
-        stage('Install package') {
+        stage('Verify package') {
             steps {
-                sh 'make install'
+                sh 'make verify'
             }
         }
         stage('Push api') {
