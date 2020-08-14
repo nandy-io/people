@@ -7,6 +7,6 @@ setup(
     package_dir = {'': 'package/lib'},
     py_modules = ['nandyio_people_integrations', 'nandyio_people_unittest'],
     install_requires=[
-        'requests==2.22'
+        'requests==2.24.0'
     ],
 )
