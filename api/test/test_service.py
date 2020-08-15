@@ -35,6 +35,8 @@ class TestRestful(klotio_unittest.TestCase):
 
         self.app.mysql.Base.metadata.create_all(self.app.mysql.engine)
 
+        self.app.logger.clear()
+
     def tearDown(self):
 
         self.session.close()

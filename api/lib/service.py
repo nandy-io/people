@@ -51,10 +51,10 @@ class Person(klotio_sqlalchemy_restful.Model):
         }
     ]
 
-class PersonCL(Person, klotio_sqlalchemy_restful.RestCL):
+class PersonCL(Person, klotio_sqlalchemy_restful.ModelCL):
     pass
 
-class PersonRUD(Person, klotio_sqlalchemy_restful.RestRUD):
+class PersonRUD(Person, klotio_sqlalchemy_restful.ModelRUD):
     pass
 
 class Integrate(PersonRUD):
