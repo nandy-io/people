@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import models
+import nandyio_people_models
 
-models.MySQL.create_database()
-models.MySQL.Base.metadata.create_all(models.MySQL().engine)
+nandyio_people_models.MySQL.create_database()
+nandyio_people_models.MySQL.Base.metadata.create_all(nandyio_people_models.MySQL().engine)
