@@ -1,7 +1,7 @@
 import unittest
 import unittest.mock
 
-import models
+import nandyio_people_models
 
 
 class Sample:
@@ -12,12 +12,12 @@ class Sample:
 
     def person(self, name, data=None):
 
-        people = self.session.query(models.Person).filter_by(name=name).all()
+        people = self.session.query(nandyio_people_models.Person).filter_by(name=name).all()
 
         if people:
             return people[0]
 
-        person = models.Person(name=name, data=data)
+        person = nandyio_people_models.Person(name=name, data=data)
         self.session.add(person)
         self.session.commit()
 
@@ -29,7 +29,7 @@ class TestMySQL(unittest.TestCase):
 
     def setUp(self):
 
-        self.mysql = models.MySQL()
+        self.mysql = nandyio_people_models.MySQL()
         self.session = self.mysql.session()
         self.mysql.drop_database()
         self.mysql.create_database()
@@ -42,18 +42,18 @@ class TestMySQL(unittest.TestCase):
 
     def test_Person(self):
 
-        self.session.add(models.Person(
+        self.session.add(nandyio_people_models.Person(
             name="unit",
             data={"a": 1}
         ))
         self.session.commit()
 
-        person = self.session.query(models.Person).one()
+        person = self.session.query(nandyio_people_models.Person).one()
         self.assertEqual(str(person), "<Person(name='unit')>")
         self.assertEqual(person.name, "unit")
         self.assertEqual(person.data, {"a": 1})
 
         person.data["a"] = 2
         self.session.commit()
-        person = self.session.query(models.Person).one()
+        person = self.session.query(nandyio_people_models.Person).one()
         self.assertEqual(person.data, {"a": 2})

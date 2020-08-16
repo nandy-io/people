@@ -1,8 +1,9 @@
 import copy
 import requests
-import klotio.service
+import klotio
+import klotio_sqlalchemy_restful
 
-class Person(klotio.service.Model):
+class Person(klotio_sqlalchemy_restful.Model):
 
     FIELD = {
         "name": "person_id",
@@ -16,7 +17,7 @@ class Person(klotio.service.Model):
     @classmethod
     def fields(cls):
 
-        return [cls.integrate(copy.deepcopy(cls.FIELD))]
+        return [klotio.integrate(copy.deepcopy(cls.FIELD))]
 
     @staticmethod
     def model(id=None, name=None):

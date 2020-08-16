@@ -1,10 +1,11 @@
 import unittest
 import unittest.mock
+import klotio_unittest
 
-import nandyio.people
+import nandyio_people_integrations
 
 
-class TestPerson(unittest.TestCase):
+class TestPerson(klotio_unittest.TestCase):
 
     @unittest.mock.patch("requests.options")
     def test_fields(self, mock_options):
@@ -30,7 +31,7 @@ class TestPerson(unittest.TestCase):
 
         mock_options.side_effect = options
 
-        self.assertEqual(nandyio.people.Person.fields(), [{
+        self.assertEqual(nandyio_people_integrations.Person.fields(), [{
             "name": "person_id",
             "label": "person",
             "style": "radios",
@@ -82,22 +83,22 @@ class TestPerson(unittest.TestCase):
 
         mock_get.side_effect = get
 
-        self.assertEqual(nandyio.people.Person.model(id=1), {
+        self.assertEqual(nandyio_people_integrations.Person.model(id=1), {
             "id": 1,
             "name": "unit"
         })
 
-        self.assertEqual(nandyio.people.Person.model(name="unit"), {
+        self.assertEqual(nandyio_people_integrations.Person.model(name="unit"), {
             "id": 1,
             "name": "unit"
         })
 
-        self.assertEqual(nandyio.people.Person.model(id=2), {
+        self.assertEqual(nandyio_people_integrations.Person.model(id=2), {
             "id": 2,
             "name": "test"
         })
 
-        self.assertEqual(nandyio.people.Person.model(name="test"), {
+        self.assertEqual(nandyio_people_integrations.Person.model(name="test"), {
             "id": 2,
             "name": "test"
         })

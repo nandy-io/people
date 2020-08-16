@@ -1,9 +1,12 @@
 VERSION?=0.1
+INSTALL=klotio/sqlalchemy:0.2
 TILT_PORT=26580
-IMAGE=arm32v7/python:3.8.5-alpine3.12
-VOLUMES=-v ${PWD}/module/:/opt/nandy-io/module \
-		-v ${PWD}/setup.py:/opt/nandy-io/setup.py
-.PHONY: up down setup tag untag
+TTY=$(shell if tty -s; then echo "-it"; fi)
+VOLUMES=-v ${PWD}/package/:/opt/service/package \
+		-v ${PWD}/setup.py:/opt/service/setup.py
+ENVIRONMENT=-e PYTHONDONTWRITEBYTECODE=1 \
+			-e PYTHONUNBUFFERED=1
+.PHONY: up down verify tag untag
 
 up:
 	mkdir -p config
@@ -15,8 +18,8 @@ down:
 	kubectx docker-desktop
 	tilt down
 
-setup:
-	docker run -it $(VOLUMES) $(IMAGE) sh -c "cd /opt/nandy-io/ && python setup.py install"
+verify:
+	docker run $(TTY) $(VOLUMES) $(ENVIRONMENT) $(INSTALL) sh -c "cp -r /opt/service /opt/install && cd /opt/install/ && python setup.py install && python -m nandyio_people_integrations && python -m nandyio_people_unittest"
 
 tag:
 	-git tag -a "v$(VERSION)" -m "Version $(VERSION)"
