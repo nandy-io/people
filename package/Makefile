@@ -3,11 +3,12 @@ ACCOUNT=nandyio
 DEBUG_PORT=5678
 TTY=$(shell if tty -s; then echo "-it"; fi)
 VOLUMES=-v ${PWD}/lib:/opt/service/lib \
-		-v ${PWD}/test:/opt/service/test
+		-v ${PWD}/test:/opt/service/test \
+		-v ${PWD}/.pylintrc:/opt/service/.pylintrc
 ENVIRONMENT=-e PYTHONDONTWRITEBYTECODE=1 \
 			-e PYTHONUNBUFFERED=1
 
-.PHONY: build mysql shell debug test
+.PHONY: build mysql shell debug test lint
 
 build:
 	docker build . -t $(ACCOUNT)/$(IMAGE)
@@ -20,3 +21,6 @@ debug:
 
 test:
 	docker run $(TTY) $(VOLUMES) $(ENVIRONMENT) $(ACCOUNT)/$(IMAGE) sh -c "coverage run -m unittest discover -v test && coverage report -m --include 'lib/*.py'"
+
+lint:
+	docker run $(TTY) $(VOLUMES) $(ENVIRONMENT) $(ACCOUNT)/$(IMAGE) sh -c "pylint --rcfile=.pylintrc lib/"

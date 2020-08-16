@@ -1,3 +1,9 @@
+"""
+Models for the People API
+"""
+
+# pylint: disable=too-few-public-methods
+
 import sqlalchemy
 import sqlalchemy.ext.mutable
 import sqlalchemy_jsonfield
@@ -6,11 +12,17 @@ import klotio_sqlalchemy_models
 
 
 class MySQL(klotio_sqlalchemy_models.MySQL):
+    """
+    Class for the People DB
+    """
 
     DATABASE = "nandy_people"
 
 
 class Person(MySQL.Base):
+    """
+    Person Model
+    """
 
     __tablename__ = "person"
 
@@ -18,7 +30,7 @@ class Person(MySQL.Base):
     name = sqlalchemy.Column(sqlalchemy.String(64), nullable=False)
     data = sqlalchemy.Column(
         sqlalchemy.ext.mutable.MutableDict.as_mutable(
-            sqlalchemy_jsonfield.JSONField(enforce_string=True,enforce_unicode=False)
+            sqlalchemy_jsonfield.JSONField(enforce_string=True, enforce_unicode=False)
         ),
         nullable=False,
         default=dict
