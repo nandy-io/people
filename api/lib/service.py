@@ -1,3 +1,7 @@
+"""
+Module for the People API
+"""
+
 import flask
 import flask_restful
 
@@ -7,7 +11,10 @@ import klotio_sqlalchemy_restful
 
 import nandyio_people_models
 
-def app():
+def build():
+    """
+    Creates the Flask App
+    """
 
     app = flask.Flask("nandy-io-people-api")
 
@@ -35,10 +42,17 @@ def app():
 
 
 class Group(klotio_flask_restful.Group):
+    """
+    Group class for People to get its members
+    """
+
     APP = "people.nandy.io"
 
 
 class Person(klotio_sqlalchemy_restful.Model):
+    """
+    Base Person class for attributes
+    """
 
     SINGULAR = "person"
     PLURAL = "persons"
@@ -52,24 +66,38 @@ class Person(klotio_sqlalchemy_restful.Model):
     ]
 
 class PersonCL(Person, klotio_sqlalchemy_restful.ModelCL):
-    pass
+    """
+    Person Restful class for Creating and Listing
+    """
 
 class PersonRUD(Person, klotio_sqlalchemy_restful.ModelRUD):
-    pass
+    """
+    Person Restful class for Retrievin, Updating, and Deleting
+    """
 
-class Integrate(PersonRUD):
+
+class Integrate(Person, flask_restful.Resource):
+    """
+    Integration endpoints
+    """
 
     @klotio_flask_restful.logger
     @klotio_sqlalchemy_restful.session
     def options(self):
+        """
+        OPTIONS endpoint to add fields for speech
+        """
 
-        choices = Person.choices()
+        choices = self.choices()
 
         return {"options": choices[0], "labels": choices[1]}
 
     @klotio_flask_restful.logger
     @klotio_sqlalchemy_restful.session
     def get(self):
+        """
+        GET endpoint to lookup people by name
+        """
 
         if "name" not in flask.request.args:
             return {"message": "missing name"}, 400

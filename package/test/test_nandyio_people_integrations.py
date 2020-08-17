@@ -102,3 +102,5 @@ class TestPerson(klotio_unittest.TestCase):
             "id": 2,
             "name": "test"
         })
+
+        self.assertIsNone(nandyio_people_integrations.Person.model(0))

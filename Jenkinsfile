@@ -16,6 +16,13 @@ pipeline {
                 }
             }
         }
+        stage('lint api') {
+            steps {
+                dir('api') {
+                    sh 'make lint'
+                }
+            }
+        }
         stage('build gui') {
             steps {
                 dir('gui') {
@@ -34,6 +41,13 @@ pipeline {
             steps {
                 dir('package') {
                     sh 'make test'
+                }
+            }
+        }
+        stage('lint package') {
+            steps {
+                dir('package') {
+                    sh 'make lint'
                 }
             }
         }

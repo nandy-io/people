@@ -1,8 +1,18 @@
+"""
+Moduule for making unittesting easier with Person
+"""
 
 class MockPerson:
+    """
+    Mock class for Person. Patch with it.
+    Has two people unit and test with ids 1 and 2
+    """
 
     @classmethod
     def fields(cls):
+        """
+        Returns fields with two people
+        """
 
         return [{
             "name": "person_id",
@@ -23,6 +33,9 @@ class MockPerson:
 
     @staticmethod
     def model(id=None, name=None):
+        """
+        Looks up the model for unit or test, ny name or id
+        """
 
         if id == 1 or name == "unit":
             return {
@@ -34,3 +47,5 @@ class MockPerson:
                 "id": 2,
                 "name": "test"
             }
+
+        return None
